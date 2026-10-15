@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Intelligence Platform | Onisha Gangwal</title>
+    <meta name="description" content="Case study: an end-to-end sales analytics pipeline with Postgres, dbt, Holt-Winters forecasting, Streamlit and CI.">
+    <meta property="og:title" content="A sales forecast that tells you how wrong it is">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f6f1e7' stroke='%231d1a16' stroke-width='4'/%3E%3Cg fill='none' stroke='%23b5541c' stroke-width='5'%3E%3Cpath d='M50 12 Q64 50 50 88 Q36 50 50 12Z'/%3E%3Cpath d='M12 50 Q50 36 88 50 Q50 64 12 50Z'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="wrap">
+        <div class="case-top">
+            <a class="brand" href="../index.html">Onisha Gangwal</a>
+            <a href="../index.html#work">&larr; All work</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        <div class="case-head">
+            <p class="kicker">Forecasting &middot; Analytics engineering &middot; Case study 02</p>
+            <h1>A sales forecast that tells you how wrong it is.</h1>
+            <p class="dek">Most sales reports explain last quarter. I built a small but complete pipeline that predicts the next 30 days by region, and is honest about how far to trust it.</p>
+        </div>
+
+        <dl class="factbox">
+            <div><dt>Role</dt><dd>Solo: pipeline, model, dashboard</dd></div>
+            <div><dt>Horizon</dt><dd>30-day forecast, per region</dd></div>
+            <div><dt>Stack</dt><dd>Python, Postgres, dbt, Docker, Streamlit</dd></div>
+            <div><dt>Code</dt><dd><a href="https://github.com/Onisha8/sales-intelligence-platform" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></dd></div>
+        </dl>
+
+        <div class="article">
+            <h2><span class="num">01 &mdash; The question</span>What is likely to happen next, region by region?</h2>
+            <p class="lede">Sales managers usually get static reports that describe what already happened. I wanted them to see what is coming: which regions are trending down, which managers are pulling ahead, and what the next month probably looks like. And I wanted them to see it in a tool they can filter themselves, not a PDF.</p>
+
+            <h2><span class="num">02 &mdash; The pipeline</span>Five steps, each one testable</h2>
+            <ol>
+                <li><strong>Ingest.</strong> Raw retail sales from Excel load into a Postgres &ldquo;raw&rdquo; schema, running in Docker.</li>
+                <li><strong>Model.</strong> dbt turns raw tables into staging, intermediate and mart layers, with data tests at each step.</li>
+                <li><strong>Export.</strong> The daily-by-region sales mart is exported for modelling.</li>
+                <li><strong>Forecast.</strong> Each region gets its own Holt-Winters model (additive trend with damping, weekly seasonality) that projects 30 days ahead.</li>
+                <li><strong>Explore.</strong> A Streamlit and Plotly dashboard shows KPIs, trends and the forecast overlay, filterable by region and manager.</li>
+            </ol>
+            <p>GitHub Actions runs <strong>the entire chain against a real Postgres service container on every push</strong>, not just a linter. If a dbt test or forecast step breaks, the build breaks.</p>
+
+            <div class="callout"><span class="mono">Design choice</span>Before it forecasts the future, the model forecasts the most recent 30 days it already knows, and reports how far off it was.</div>
+
+            <h2><span class="num">03 &mdash; The finding</span>Daily forecasts are directional, and I said so</h2>
+            <p>The backtest is the point of this project. On held-out data, daily-grain error (MAE) ran at <strong>85&ndash;135% of average daily sales</strong>. At this volume, daily store sales are just very noisy. Many portfolios would bury that number. I put it front and centre in the README, because a manager who trusts a daily forecast too much will make worse inventory calls than one who knows to read it as a trend.</p>
+            <p>The fix is also clear from the data: aggregate to weekly grain, where the noise averages out and accuracy improves considerably. That is the first item on the roadmap.</p>
+
+            <h2><span class="num">04 &mdash; Where AI comes in next</span>Dashboards that explain themselves</h2>
+            <ul>
+                <li>Weekly-grain and product-category forecasts for materially better accuracy.</li>
+                <li><strong>LLM-generated narrative summaries</strong> that tell a manager what changed this week and the likely reason, in plain English, next to the chart.</li>
+                <li>Scheduled runs (Airflow or a GitHub Actions cron) and a deployed dashboard.</li>
+            </ul>
+        </div>
+
+        <nav class="next-up" aria-label="More case studies">
+            <a href="financial-crime.html"><span class="kicker">&larr; Previous</span><h3>One rule was raising two of every three fraud alerts</h3></a>
+            <a class="right" href="ev-charging.html"><span class="kicker">Next case study &rarr;</span><h3>Where America&rsquo;s EV charging deserts are</h3></a>
+        </nav>
+    </main>
+
+    <footer class="wrap">
+        <div class="colophon">
+            <span>&copy; 2026 Onisha Gangwal</span>
+            <span><a href="https://www.linkedin.com/in/onisha-gangwal/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/Onisha8" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>

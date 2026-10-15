@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Crime Analytics | Onisha Gangwal</title>
+    <meta name="description" content="Case study: a transaction-monitoring analytics platform with SQL detection scenarios, Power BI dashboards and a 62-check validation suite.">
+    <meta property="og:title" content="One rule was raising two of every three fraud alerts">
+    <meta property="og:image" content="https://onishagangwal.github.io/assets/img/fc-02_tm_model_performance.jpg">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f6f1e7' stroke='%231d1a16' stroke-width='4'/%3E%3Cg fill='none' stroke='%23b5541c' stroke-width='5'%3E%3Cpath d='M50 12 Q64 50 50 88 Q36 50 50 12Z'/%3E%3Cpath d='M12 50 Q50 36 88 50 Q50 64 12 50Z'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="wrap">
+        <div class="case-top">
+            <a class="brand" href="../index.html">Onisha Gangwal</a>
+            <a href="../index.html#work">&larr; All work</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        <div class="case-head">
+            <p class="kicker">AI &amp; risk &middot; Case study 01</p>
+            <h1>One detection rule was raising two of every three fraud alerts.</h1>
+            <p class="dek">I built a transaction-monitoring analytics platform for a simulated bank, then used it to answer the question every financial-crime team argues about: which alerts are worth an investigator&rsquo;s time?</p>
+        </div>
+
+        <dl class="factbox">
+            <div><dt>Role</dt><dd>Solo: data, SQL, BI, validation</dd></div>
+            <div><dt>Data</dt><dd>500K synthetic transactions, $2.1B volume</dd></div>
+            <div><dt>Stack</dt><dd>Python, SQL, Power BI</dd></div>
+            <div><dt>Code</dt><dd><a href="https://github.com/Onisha8/financial-crime-analytics-platform" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></dd></div>
+        </dl>
+
+        <figure class="wide">
+            <img src="../assets/img/fc-01_executive_overview.jpg" alt="Executive overview dashboard: 500K transactions, $2.10bn volume, 53K alerts, 19K cases, 11K SARs, monthly alert volume and customer risk distribution">
+            <figcaption>The executive view: 500K transactions become 53K alerts, 19K cases and 11K suspicious activity reports (SARs). Customer risk is tiered from low to critical.</figcaption>
+        </figure>
+
+        <div class="article">
+            <h2><span class="num">01 &mdash; The question</span>Every alert costs an investigator&rsquo;s hour. Which ones earn it?</h2>
+            <p class="lede">Banks run transaction-monitoring rules that flag suspicious activity. Each flag becomes an alert, each alert needs a human review, and most turn out to be nothing. Too many alerts bury investigators. Too few and real money laundering slips through. In six years in banking and credit-risk analytics I watched teams make this trade-off by gut feel. I wanted to build the system that lets them make it with data.</p>
+
+            <h2><span class="num">02 &mdash; The data</span>A whole bank, built from scratch</h2>
+            <p>Real financial-crime data is confidential, so I generated a realistic one. Python scripts create customers, accounts, cards, devices, IP addresses, merchants, loans, login events and 500,000 transactions. They also create everything downstream: alerts, investigations, case notes, investigator actions, SAR filings and an audit trail. Everything lands in a relational schema and is loaded into SQL.</p>
+
+            <h2><span class="num">03 &mdash; The method</span>Detection in SQL, decisions in Power BI</h2>
+            <p>I wrote eight detection scenarios as SQL, each mirroring a pattern real monitoring teams look for:</p>
+            <ul>
+                <li>structuring: cash deposits kept just under the reporting threshold</li>
+                <li>money moving in and straight back out</li>
+                <li>large wire transfers</li>
+                <li>high-risk geographies</li>
+                <li>dormant accounts that suddenly wake up</li>
+                <li>unrelated customers sharing one device</li>
+                <li>repeated round-dollar amounts</li>
+                <li>payments to high-risk merchants</li>
+            </ul>
+            <p>From there, 40 SQL scripts measure:</p>
+            <ul>
+                <li>each rule&rsquo;s effectiveness and false-positive rate</li>
+                <li>how alerts convert into cases and SARs</li>
+                <li>investigator workload, turnaround time and SLA aging</li>
+                <li>customer risk scoring and entity networks</li>
+            </ul>
+            <p>The results feed a four-page Power BI report: Executive Overview, TM Model Performance, Investigation Operations, and Customer &amp; Network Risk.</p>
+        </div>
+
+        <figure class="wide">
+            <img src="../assets/img/fc-02_tm_model_performance.jpg" alt="TM Model Performance dashboard: alert volume by rule, false-positive rate by rule, downstream conversion, case-to-SAR conversion and a threshold trade-off chart">
+            <figcaption>Model performance by rule. One rule (TM008) dominates alert volume; the bottom-right chart shows the threshold trade-off between workload saved and SARs retained.</figcaption>
+        </figure>
+
+        <div class="article">
+            <h2><span class="num">04 &mdash; The finding</span>One noisy rule, and a price tag for quieting it</h2>
+            <p>The bank raised 53.4K alerts at a 42.5% false-positive rate. Most of that volume came from one place: the high-risk-merchant rule (TM008) raised <strong>36,164 alerts, about 68% of the total</strong>. It was also one of the weaker rules at turning cases into SARs: 60% of its cases became SARs, compared with 83% for the best rule.</p>
+
+            <div class="callout"><span class="mono">The takeaway</span>The fastest way to cut investigator workload was not a new model. It was re-tuning the one rule generating most of the noise, and knowing exactly what that would cost.</div>
+
+            <p>So I modelled the trade-off. The threshold analysis raises TM008&rsquo;s alert-score cutoff step by step and tracks two lines: the share of investigator workload removed, and the share of genuine SARs still caught. Up to a point, workload drops while SAR retention barely moves. Past it, every hour saved starts costing real detections. That curve turns &ldquo;we have too many alerts&rdquo; into a decision a compliance lead can sign off on.</p>
+
+            <div class="table-scroll">
+                <table class="data">
+                    <thead><tr><th>Rule</th><th class="n">Alerts</th><th class="n">False-positive rate</th><th class="n">Case &rarr; SAR</th></tr></thead>
+                    <tbody>
+                        <tr><td>TM003 (dormant account)</td><td class="n">1,350</td><td class="n">44.5%</td><td class="n">82.7%</td></tr>
+                        <tr><td>TM002 (high-risk geography)</td><td class="n">1,270</td><td class="n">43.1%</td><td class="n">79.6%</td></tr>
+                        <tr><td>TM006 (large wire)</td><td class="n">3,000</td><td class="n">41.7%</td><td class="n">74.3%</td></tr>
+                        <tr><td>TM001 (structuring)</td><td class="n">3,000</td><td class="n">41.6%</td><td class="n">64.9%</td></tr>
+                        <tr class="focus"><td>TM008 (high-risk merchant)</td><td class="n">36,164</td><td class="n">42.5%</td><td class="n">60.4%</td></tr>
+                        <tr><td>TM005 (shared device)</td><td class="n">1,528</td><td class="n">41.7%</td><td class="n">49.3%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2><span class="num">05 &mdash; Trust</span>62 checks before anyone sees a number</h2>
+            <p>A dashboard is only as good as the data under it, so the platform ships with an automated validation suite. It runs 62 checks across:</p>
+            <ul>
+                <li>data quality: unique IDs, no orphaned alerts, valid score ranges</li>
+                <li>lifecycle logic: no investigation starts before its alert, and every closed case has a disposition</li>
+                <li>audit trail, customer risk, entity networks, and the Power BI layer itself</li>
+            </ul>
+            <p>The latest run: <strong>60 pass, 2 warn, 0 fail</strong>. This is the habit I took from banking, where I built a data-quality framework that cut inconsistencies by 35%. Prove the numbers first.</p>
+        </div>
+
+        <div class="wide pair">
+            <figure>
+                <img src="../assets/img/fc-03_investigation_operations.jpg" alt="Investigation operations dashboard with investigator workload, turnaround and SLA aging" loading="lazy">
+                <figcaption>Investigation operations: workload, turnaround time and SLA aging by investigator.</figcaption>
+            </figure>
+            <figure>
+                <img src="../assets/img/fc-04_customer_network_risk.jpg" alt="Customer and network risk dashboard" loading="lazy">
+                <figcaption>Customer &amp; network risk: who is high-risk, and who they are connected to.</figcaption>
+            </figure>
+        </div>
+
+        <div class="article">
+            <h2><span class="num">06 &mdash; What I&rsquo;d do next</span>From rules to learning</h2>
+            <p>The rules here are deliberately transparent, which is what regulators expect. The natural next step is a machine-learning layer on top: a model that scores each alert&rsquo;s likelihood of becoming a SAR, so investigators work the queue in order of risk instead of arrival. Investigator dispositions become the training labels. This platform already captures them.</p>
+            <div class="caveat">
+                <p><strong>A note on the data.</strong> Everything here is synthetic, generated to behave like a real bank. The numbers show the method, not any real institution&rsquo;s risk.</p>
+            </div>
+        </div>
+
+        <nav class="next-up" aria-label="More case studies">
+            <a href="../index.html#work"><span class="kicker">&larr; Back</span><h3>All work</h3></a>
+            <a class="right" href="sales-intelligence.html"><span class="kicker">Next case study &rarr;</span><h3>A sales forecast that tells you how wrong it is</h3></a>
+        </nav>
+    </main>
+
+    <footer class="wrap">
+        <div class="colophon">
+            <span>&copy; 2026 Onisha Gangwal</span>
+            <span><a href="https://www.linkedin.com/in/onisha-gangwal/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/Onisha8" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>

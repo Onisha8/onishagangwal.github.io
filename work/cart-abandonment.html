@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting Cart Abandonment | Onisha Gangwal</title>
+    <meta name="description" content="Case study: comparing five classifiers to predict online shopper purchase vs. abandonment, with honest per-class evaluation.">
+    <meta property="og:title" content="Predicting who will abandon their cart, and reporting the hard number">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f6f1e7' stroke='%231d1a16' stroke-width='4'/%3E%3Cg fill='none' stroke='%23b5541c' stroke-width='5'%3E%3Cpath d='M50 12 Q64 50 50 88 Q36 50 50 12Z'/%3E%3Cpath d='M12 50 Q50 36 88 50 Q50 64 12 50Z'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="wrap">
+        <div class="case-top">
+            <a class="brand" href="../index.html">Onisha Gangwal</a>
+            <a href="../index.html#work">&larr; All work</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        <div class="case-head">
+            <p class="kicker">Machine learning &middot; E-commerce &middot; Case study 06</p>
+            <h1>Predicting who will abandon their cart, and reporting the hard number instead of the flattering one.</h1>
+            <p class="dek">Five classifiers, 12,330 shopping sessions, and one lesson about class imbalance that every model card should carry.</p>
+        </div>
+
+        <dl class="factbox">
+            <div><dt>Data</dt><dd>12,330 sessions, 18 features; 15.5% end in a purchase</dd></div>
+            <div><dt>Models</dt><dd>Logistic regression, KNN, decision tree, random forest, XGBoost</dd></div>
+            <div><dt>Stack</dt><dd>Python, scikit-learn, imblearn, XGBoost</dd></div>
+            <div><dt>Code</dt><dd><a href="https://github.com/Onisha8/Predicting_Abandonment_Tendency_of_Online_Shoppers" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></dd></div>
+        </dl>
+
+        <div class="article">
+            <h2><span class="num">01 &mdash; The question</span>Can we tell, mid-session, who is about to leave?</h2>
+            <p class="lede">Most online shopping sessions end without a purchase, and every abandoned cart is revenue walking away. If a model can spot, from browsing behaviour alone, which sessions will convert and which won&rsquo;t, a business can step in at the right moment with a reminder, an offer or a simpler checkout. It can also avoid wasting discounts on people who were going to buy anyway.</p>
+
+            <h2><span class="num">02 &mdash; The method</span>A pipeline that can&rsquo;t cheat</h2>
+            <p>Only 15.5% of sessions end in a purchase, so a lazy model can score 85% accuracy by predicting &ldquo;no&rdquo; every time. Two decisions kept the evaluation honest:</p>
+            <ul>
+                <li><strong>Leak-free preprocessing.</strong> Scaling and one-hot encoding are fit only on the training fold, inside a single scikit-learn/imblearn pipeline.</li>
+                <li><strong>SMOTE inside the pipeline.</strong> Synthetic oversampling of buyers happens only on training data, so the test set stays real.</li>
+            </ul>
+            <p>I compared logistic regression, KNN, a decision tree, a random forest and XGBoost, choosing on macro F1, which weighs buyers and non-buyers equally, rather than accuracy.</p>
+
+            <h2><span class="num">03 &mdash; The result</span>XGBoost wins. Here is what that really means.</h2>
+            <div class="table-scroll">
+                <table class="data">
+                    <thead><tr><th>XGBoost, test set</th><th class="n">Precision</th><th class="n">Recall</th><th class="n">F1</th><th class="n">Sessions</th></tr></thead>
+                    <tbody>
+                        <tr><td>No purchase (majority)</td><td class="n">93%</td><td class="n">95%</td><td class="n">94%</td><td class="n">2,084</td></tr>
+                        <tr class="focus"><td>Purchase (the one that matters)</td><td class="n">69%</td><td class="n">62%</td><td class="n">65%</td><td class="n">382</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Overall: 90% accuracy, <strong>0.92 AUC-ROC</strong>, macro F1 of 0.80.</p>
+
+            <div class="callout"><span class="mono">The honest number</span>The model catches 62% of real buyers, and 69% of the sessions it flags as buyers actually buy. That is the number to plan a campaign around, not the 94%.</div>
+
+            <p>Session behaviour carried the signal. <strong>Time spent on product pages</strong>, <strong>page value</strong> and <strong>proximity to special days</strong> such as holidays were the strongest predictors.</p>
+        </div>
+
+        <div class="wide pair">
+            <figure>
+                <img src="../assets/img/cart-precision_recall_curve_xgboost.png" alt="Precision-recall curve for the XGBoost model" loading="lazy">
+                <figcaption>Precision vs. recall for buyers. Moving the threshold trades one for the other.</figcaption>
+            </figure>
+            <figure>
+                <img src="../assets/img/cart-confusion_matrix_xgboost.png" alt="Confusion matrix for the XGBoost model on the test set" loading="lazy">
+                <figcaption>Where the model is right and wrong on held-out sessions.</figcaption>
+            </figure>
+        </div>
+
+        <div class="article">
+            <h2><span class="num">04 &mdash; The correction</span>I caught my own mistake</h2>
+            <p>An earlier version of the project quoted an AUC of 0.93 that didn&rsquo;t match a fresh run of the pipeline, and it reported only majority-class scores. I rebuilt the preprocessing to be leak-free, re-ran everything, and replaced the headline with numbers reproduced straight from the saved metrics file. In AI work that matters: a model that looks great on a slide and disappoints in production costs more than one that was honestly average.</p>
+
+            <h2><span class="num">05 &mdash; What I&rsquo;d do next</span>Make the threshold a business decision</h2>
+            <ul>
+                <li><strong>Tune the decision threshold</strong> by cost. Wrongly discounting a sure buyer and missing a real abandoner don&rsquo;t cost the same.</li>
+                <li>Add cross-validated metrics with variance, not a single split.</li>
+                <li>Add user-level and product-level features (loyalty, categories, discounts) and score sessions in real time.</li>
+                <li>Prove the business impact with an A/B test of the intervention itself.</li>
+            </ul>
+        </div>
+
+        <nav class="next-up" aria-label="More case studies">
+            <a href="revenue-optimization.html"><span class="kicker">&larr; Previous</span><h3>What makes a one-time shopper come back?</h3></a>
+            <a class="right" href="financial-crime.html"><span class="kicker">Back to the lead story &rarr;</span><h3>One rule was raising two of every three fraud alerts</h3></a>
+        </nav>
+    </main>
+
+    <footer class="wrap">
+        <div class="colophon">
+            <span>&copy; 2026 Onisha Gangwal</span>
+            <span><a href="https://www.linkedin.com/in/onisha-gangwal/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/Onisha8" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>

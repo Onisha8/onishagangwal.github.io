@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Optimization Analytics | Onisha Gangwal</title>
+    <meta name="description" content="Case study: statistical analysis in R of ~1M online retail transactions, covering order value, UK vs international spending and repeat-purchase behaviour.">
+    <meta property="og:title" content="What makes a one-time shopper come back?">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f6f1e7' stroke='%231d1a16' stroke-width='4'/%3E%3Cg fill='none' stroke='%23b5541c' stroke-width='5'%3E%3Cpath d='M50 12 Q64 50 50 88 Q36 50 50 12Z'/%3E%3Cpath d='M12 50 Q50 36 88 50 Q50 64 12 50Z'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="wrap">
+        <div class="case-top">
+            <a class="brand" href="../index.html">Onisha Gangwal</a>
+            <a href="../index.html#work">&larr; All work</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        <div class="case-head">
+            <p class="kicker">Statistics &middot; R &middot; Case study 05</p>
+            <h1>What makes a one-time shopper come back?</h1>
+            <p class="dek">A million transactions from a UK online retailer, and seven statistical methods, each chosen to answer one specific business question.</p>
+        </div>
+
+        <dl class="factbox">
+            <div><dt>Data</dt><dd>UCI Online Retail II, ~1M rows, 2009&ndash;2011</dd></div>
+            <div><dt>Methods</dt><dd>CIs, t-tests, regression, logistic regression, ANOVA</dd></div>
+            <div><dt>Stack</dt><dd>R, tidyverse, broom, car</dd></div>
+            <div><dt>Code</dt><dd><a href="https://github.com/Onisha8/Revenue-Optimization-Analytics" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></dd></div>
+        </dl>
+
+        <div class="article">
+            <h2><span class="num">01 &mdash; The questions</span>Where does revenue really come from?</h2>
+            <p class="lede">An online retailer wants to grow revenue but isn&rsquo;t sure where to push. I framed five questions it could act on. What is a typical order really worth? Do international customers spend differently from UK ones? What drives a bigger basket? What makes a customer come back for a second order? And does order value differ by country?</p>
+
+            <h2><span class="num">02 &mdash; The method</span>One method per question</h2>
+            <p>After cleaning out cancellations and anonymous orders and engineering revenue and time features, each question got the test that fits it:</p>
+            <div class="table-scroll">
+                <table class="data">
+                    <thead><tr><th>Question</th><th>Method</th></tr></thead>
+                    <tbody>
+                        <tr><td>What is a typical order worth?</td><td>95% confidence interval on average order value</td></tr>
+                        <tr><td>Do UK and international customers spend differently?</td><td>Hypothesis test</td></tr>
+                        <tr><td>What drives order value?</td><td>Linear regression</td></tr>
+                        <tr><td>Who becomes a repeat buyer?</td><td>Logistic regression</td></tr>
+                        <tr><td>Does order value differ by country?</td><td>ANOVA</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <figure class="wide">
+            <img src="../assets/img/rev-monthly_revenue_trend.png" alt="Line chart of monthly revenue from 2009 to 2011" loading="lazy">
+            <figcaption>Monthly revenue, Dec 2009 &ndash; Dec 2011.</figcaption>
+        </figure>
+
+        <div class="article">
+            <h2><span class="num">03 &mdash; The findings</span>Variety, not a big first order, predicts loyalty</h2>
+            <ul>
+                <li><strong>UK and international customers spend differently.</strong> The difference in order value is statistically significant, so one pricing or promotion strategy shouldn&rsquo;t serve both.</li>
+                <li><strong>Average order value differs across major countries</strong> (ANOVA), which supports country-level targeting.</li>
+                <li><strong>Product variety and time since first purchase are the strongest predictors of a repeat customer.</strong> A large first order has a small, <em>negative</em> association with coming back.</li>
+            </ul>
+
+            <div class="callout"><span class="mono">The takeaway</span>Getting a customer to explore the catalogue may matter more for retention than getting them to spend big on day one.</div>
+        </div>
+
+        <div class="wide pair">
+            <figure>
+                <img src="../assets/img/rev-uk_vs_nonuk_order_value.png" alt="Comparison of order values for UK and non-UK customers" loading="lazy">
+                <figcaption>Order value, UK vs. international customers.</figcaption>
+            </figure>
+            <figure>
+                <img src="../assets/img/rev-predicted_repeat_purchase_probability.png" alt="Predicted probability of a repeat purchase from the logistic model" loading="lazy">
+                <figcaption>Predicted probability of a repeat purchase.</figcaption>
+            </figure>
+        </div>
+
+        <div class="article">
+            <h2><span class="num">04 &mdash; The honest part</span>What these results can&rsquo;t tell you</h2>
+            <div class="caveat">
+                <p><strong>Built-in arithmetic.</strong> Item count and price are components of order value, so part of the regression&rsquo;s explanatory power is arithmetic, not insight.</p>
+                <p><strong>Observation window.</strong> Customers who first bought near the end of 2011 had little time to return, which inflates the effect of &ldquo;time since first purchase.&rdquo; I excluded customers with under 90 days of history to reduce that bias.</p>
+                <p><strong>In-sample only, and correlational.</strong> There is no train/test split, and these are associations from observational data, not proven causal levers.</p>
+            </div>
+            <p>Naming these limits is what makes the findings usable. The next step is to validate the repeat-purchase model on held-out customers and test the variety hypothesis directly with an A/B test on product recommendations.</p>
+        </div>
+
+        <nav class="next-up" aria-label="More case studies">
+            <a href="florida-poverty.html"><span class="kicker">&larr; Previous</span><h3>Where does Tampa stand on poverty?</h3></a>
+            <a class="right" href="cart-abandonment.html"><span class="kicker">Next case study &rarr;</span><h3>Predicting who will abandon their cart</h3></a>
+        </nav>
+    </main>
+
+    <footer class="wrap">
+        <div class="colophon">
+            <span>&copy; 2026 Onisha Gangwal</span>
+            <span><a href="https://www.linkedin.com/in/onisha-gangwal/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/Onisha8" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>

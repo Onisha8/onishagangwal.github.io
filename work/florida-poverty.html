@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida Poverty Trends | Onisha Gangwal</title>
+    <meta name="description" content="Case study: a Tableau dashboard comparing poverty rates across ten Florida cities from 2012 to 2023, and where Tampa stands.">
+    <meta property="og:title" content="Where does Tampa stand on poverty?">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23f6f1e7' stroke='%231d1a16' stroke-width='4'/%3E%3Cg fill='none' stroke='%23b5541c' stroke-width='5'%3E%3Cpath d='M50 12 Q64 50 50 88 Q36 50 50 12Z'/%3E%3Cpath d='M12 50 Q50 36 88 50 Q50 64 12 50Z'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="wrap">
+        <div class="case-top">
+            <a class="brand" href="../index.html">Onisha Gangwal</a>
+            <a href="../index.html#work">&larr; All work</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        <div class="case-head">
+            <p class="kicker">Tableau &middot; Regional economics &middot; Case study 04</p>
+            <h1>Where does Tampa stand on poverty?</h1>
+            <p class="dek">My adopted city, measured against nine other Florida cities across a decade of poverty data, on a single dashboard built to be read in under a minute.</p>
+        </div>
+
+        <dl class="factbox">
+            <div><dt>Format</dt><dd>Annotated Tableau dashboard</dd></div>
+            <div><dt>Scope</dt><dd>10 Florida cities, 2012&ndash;2023</dd></div>
+            <div><dt>Project</dt><dd>&ldquo;State of the Region&rdquo;</dd></div>
+            <div><dt>Live</dt><dd><a href="https://public.tableau.com/app/profile/onisha.gangwal/viz/StateoftheRegionprojectOG/FloridaPovertyRateTrends" target="_blank" rel="noopener noreferrer">Tableau Public &nearr;</a></dd></div>
+        </dl>
+
+        <div class="article">
+            <h2><span class="num">01 &mdash; The question</span>Is Tampa keeping up with the rest of Florida?</h2>
+            <p class="lede">Regional leaders ask a simple question: are we getting better, and how do we compare? I took poverty rates for ten of Florida&rsquo;s largest cities, from Jacksonville to Hialeah, and designed one dashboard that answers both halves at a glance. A decade-long trend sits on top and the latest ranking below, with Tampa highlighted throughout.</p>
+
+            <h2><span class="num">02 &mdash; What the data says</span>Progress, unevenly shared</h2>
+            <ul>
+                <li><strong>Hialeah improved the most</strong>, with poverty down 7.4% since 2012.</li>
+                <li><strong>Miami was the only city to get worse</strong>, up 0.4% over the same period.</li>
+                <li><strong>Tampa improved gradually but still ranked third-highest in 2023</strong>, behind Tallahassee and Miami.</li>
+                <li>Port St. Lucie and Hialeah swung noticeably from year to year. Jacksonville ended the decade with one of the lowest rates of the group.</li>
+                <li>Tallahassee peaked at 31.1% in 2013 and stayed above 20% throughout. It is likely shaped by its large student population, which is worth testing before drawing conclusions.</li>
+            </ul>
+
+            <div class="callout"><span class="mono">Design choice</span>One highlighted line, nine muted ones, and annotations written in plain sentences. The reader should get the story before they read an axis.</div>
+        </div>
+
+        <figure class="wide">
+            <div class="tableau-frame">
+                <iframe title="Interactive Tableau dashboard: Analyzing Florida's Poverty Trends, Where Does Tampa Stand?"
+                        src="https://public.tableau.com/views/StateoftheRegionprojectOG/FloridaPovertyRateTrends?:showVizHome=no&amp;:embed=true&amp;:toolbar=yes"
+                        loading="lazy" allowfullscreen></iframe>
+            </div>
+            <figcaption>The live dashboard. Hover any line or bar for exact values.</figcaption>
+        </figure>
+
+        <div class="article">
+            <h2><span class="num">03 &mdash; What I&rsquo;d do next</span>From &ldquo;where&rdquo; to &ldquo;why&rdquo;</h2>
+            <p>The dashboard shows where each city stands. The next step is explaining it: join in population size, median income, housing costs and student population, then model which factors best predict a city&rsquo;s poverty trajectory. That would let a regional planner see which levers actually separated Hialeah&rsquo;s decline from Miami&rsquo;s rise.</p>
+        </div>
+
+        <nav class="next-up" aria-label="More case studies">
+            <a href="ev-charging.html"><span class="kicker">&larr; Previous</span><h3>Where America&rsquo;s EV charging deserts are</h3></a>
+            <a class="right" href="revenue-optimization.html"><span class="kicker">Next case study &rarr;</span><h3>What makes a one-time shopper come back?</h3></a>
+        </nav>
+    </main>
+
+    <footer class="wrap">
+        <div class="colophon">
+            <span>&copy; 2026 Onisha Gangwal</span>
+            <span><a href="https://www.linkedin.com/in/onisha-gangwal/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/Onisha8" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>
